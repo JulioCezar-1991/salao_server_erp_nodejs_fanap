@@ -3,19 +3,30 @@
 const mysql = require('mysql');
 
 exports.postLogin = (req, res, next) => {
-	var name = req.query.name.substring(0, 150);
+    var login = req.query.login.substring(0, 150);
     var password = req.query.password.substring(0, 150);
-    console.log(name, password);
-    execSQLQuery(`SELECT usuario.name, usuario.password FROM mydb.usuario WHERE usuario.name = "${name}" AND usuario.password = "${password}";`, res);    
+    console.log(req.query.login);
+    execSQLQuery(`SELECT usuario.login, usuario.password FROM mydb.usuario WHERE usuario.login = "${login}" AND usuario.password = "${password}";`, res);
 };
 
-exports.postCreateLogin = (req, res) => {
+
+exports.postCreateLogin = (req, res, ne) => {
+    const name = req.query.name.substring(0, 150);
+    const login = req.query.login.substring(0, 150);
+    const password = req.query.password.substring(0, 11);
+    const telefone = req.query.telefone.substring(0, 11);
+    const email = req.query.email.substring(0, 11);
+    console.log(req.query);
+    queryCreateUser(`INSERT INTO mydb.usuario(usuario.name, usuario.login, usuario.password) VALUES('${name}','${login}','${password}')`, `INSERT INTO mydb.contato(contato.telefone, contato.email, id_usuario) VALUES('${telefone}','${email}', (select usuario.id_usuario from mydb.usuario where usuario.id_usuario = last_insert_id()));`, res);
+};
+
+/* exports.postCreateLogin = (req, res) => {
     const name = req.query.name.substring(0, 150);
     const login = req.query.login.substring(0, 150);
     const password = req.query.password.substring(0, 11);
     console.log(req.query);
     execSQLQuery(`INSERT INTO mydb.usuario(usuario.name, usuario.login, usuario.password) VALUES('${name}','${login}','${password}');`, res);
-};
+}; */
 
 exports.put = (req, res, next) => {
     const id = parseInt(req.params.id);
@@ -47,12 +58,35 @@ function execSQLQuery(sqlQry, res) {
 
     connection.query(sqlQry, function (error, results, fields) {
         if (error)
-            console.log('executou um erro!');
+            console.log('executou!');
 
         else
             res.json(results);
         connection.end();
-        console.log('execução bem sucedida !');
-    },);
+        console.log('executou!');
+    });
+}
+
+function queryCreateUser(sqlUser, sqlCon, res) {
+    const connection = mysql.createConnection({
+        host: "localhost",
+        port: "3306",
+        user: "root",
+        password: "root",
+        database: "mydb"
+    });
+    connection.query(sqlUser, function (error) {
+        if (error)
+            console.log('executou um erro!');
+        else
+        return connection.query(sqlCon, function (error, results, fields) {
+            if (error)
+                console.log('executou um erro!');
+            else
+                res.json(results);
+            connection.end();
+            console.log('execução bem sucedida !');
+        });
+    });
 }
 

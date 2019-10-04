@@ -7,7 +7,8 @@ const app = express();
 const mysql = require('mysql');
 
 
-router.get('/get/usuario', (req, res) => {
+
+router.get('/get/usuario', (req, res, rows) => {
     execSQLQuery('SELECT * FROM  mydb.usuario', res);
 });
 
