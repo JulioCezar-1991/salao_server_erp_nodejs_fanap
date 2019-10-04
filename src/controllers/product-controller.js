@@ -3,36 +3,37 @@
 const mysql = require('mysql');
 
 exports.postLogin = (req, res, next) => {
-	var nome = req.query.nome.substring(0, 150);
-    var senha = req.query.senha.substring(0, 150);
-    console.log(nome, senha);
-    execSQLQuery(`SELECT cliente.nome, cliente.senha FROM mydb.cliente WHERE cliente.nome = "${nome}" AND cliente.senha = "${senha}";`, res);    
+	var name = req.query.name.substring(0, 150);
+    var password = req.query.password.substring(0, 150);
+    console.log(name, password);
+    execSQLQuery(`SELECT usuario.name, usuario.password FROM mydb.usuario WHERE usuario.name = "${name}" AND usuario.password = "${password}";`, res);    
 };
 
 exports.postCreateLogin = (req, res) => {
-    const nome = req.query.nome.substring(0, 150);
-    const senha = req.query.senha.substring(0, 150);
-    const cpf = req.query.cpf.substring(0, 11);
+    const name = req.query.name.substring(0, 150);
+    const login = req.query.login.substring(0, 150);
+    const password = req.query.password.substring(0, 11);
     console.log(req.query);
-    execSQLQuery(`INSERT INTO mydb.cliente(cliente.nome, cliente.senha, cliente.cpf) VALUES('${nome}','${senha}','${cpf}');`, res);
+    execSQLQuery(`INSERT INTO mydb.usuario(usuario.name, usuario.login, usuario.password) VALUES('${name}','${login}','${password}');`, res);
 };
 
 exports.put = (req, res, next) => {
     const id = parseInt(req.params.id);
-    const nome = req.query.nome.substring(0, 150);
-    execSQLQuery(`UPDATE mydb.cliente SET cliente.nome= '${nome}', cliente.cpf='${cpf}' WHERE cliente.idcliente= ${id}`, res);
+    const name = req.query.name.substring(0, 150);
+    const login = req.query.login.substring(0, 11);
+    execSQLQuery(`UPDATE mydb.usuario SET usuario.name= '${name}', usuario.login='${login}' WHERE usuario.id_usuario= ${id}`, res);
 };
 
 exports.patch = (req, res) => {
     const id = parseInt(req.params.id);
-    const nome = req.query.nome.substring(0, 150);
-    const cpf = req.query.cpf.substring(0, 11);
-    execSQLQuery(`UPDATE mydb.cliente SET cliente.nome= '${nome}', cliente.cpf='${cpf}' WHERE cliente.idcliente= ${id}`, res);
+    const name = req.query.name.substring(0, 150);
+    const login = req.query.login.substring(0, 11);
+    execSQLQuery(`UPDATE mydb.usuario SET usuario.name= '${name}', usuario.login='${login}' WHERE usuario.id_usuario= ${id}`, res);
 };
 
 exports.delete = (req, res) => {
     console.log("Aqui");
-    execSQLQuery('DELETE FROM mydb.cliente WHERE cliente.idcliente =' + parseInt(req.params.id), res);
+    execSQLQuery('DELETE FROM mydb.usuario WHERE usuario.id_usuario =' + parseInt(req.params.id), res);
 };
 
 function execSQLQuery(sqlQry, res) {

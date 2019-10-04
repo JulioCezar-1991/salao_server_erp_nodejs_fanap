@@ -6,24 +6,25 @@ const router = express.Router();
 const app = express();
 const mysql = require('mysql');
 
-router.get('/get/cliente', (req, res) => {
-    execSQLQuery('SELECT * FROM  mydb.cliente', res);
+
+router.get('/get/usuario', (req, res) => {
+    execSQLQuery('SELECT * FROM  mydb.usuario', res);
 });
 
-router.get('/get/cliente/:id?', (req, res) => { 
+router.get('/get/usuario/:id?', (req, res) => { 
     let filter = '';
     if (req.params.id) filter = (req.params.id);
-    execSQLQuery(`SELECT * FROM  mydb.cliente where idcliente = "${filter}%";`, res);
+    execSQLQuery(`SELECT * FROM  mydb.usuario where id_usuario = "${filter}%";`, res);
 });
 
-router.get('/get/cliente/pesquisa/:nome?', (req, res) => {
+router.get('/get/usuario/pesquisa/:name?', (req, res) => {
     let filter = '';
-    if (req.params.nome) filter = (req.params.nome);
-    execSQLQuery(`SELECT * FROM  mydb.cliente where cliente.nome like "%${filter}%";`, res);
+    if (req.params.name) filter = (req.params.name);
+    execSQLQuery(`SELECT * FROM  mydb.usuario where usuario.name like "%${filter}%";`, res);
 });
 
-router.get('/get/clientecontato', (req, res) => {
-    execSQLQuery(`SELECT * FROM mydb.cliente as cli inner join mydb.contato as con where cli.idcliente = con.idcliente;`, res);
+router.get('/get/usuario_contato', (req, res) => {
+    execSQLQuery(`SELECT * FROM mydb.usuario as cli inner join mydb.contato as con where cli.id_usuario = con.id_usuario;`, res);
 });
 
 module.exports = router;
