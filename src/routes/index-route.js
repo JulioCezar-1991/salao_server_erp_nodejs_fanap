@@ -4,12 +4,11 @@ const express = require('express');
 const router = express.Router();
 
 const app = express();
-const mysql = require('mysql');
-
+const connection = require('../connection');
 
 
 router.get('/get/usuario', (req, res, rows) => {
-    execSQLQuery('SELECT * FROM  mydb.usuario', res);
+    execSQLQuery('SELECT * FROM  bdfanap.usuario', res);
 });
 
 router.get('/get/usuario/:id?', (req, res) => { 
@@ -32,21 +31,12 @@ module.exports = router;
 app.use('/', router);
 
 function execSQLQuery(sqlQry, res) {
-    const connection = mysql.createConnection({
-        host: "localhost",
-        port: "3306",
-        user: "root",
-        password: "root",
-        database: "mydb"
-    });
 
     connection.query(sqlQry, function (error, results, fields) {
         if (error)
             console.log('executou!');
-
         else
-            res.json(results);
-        connection.end();
+            res.json(results);    
         console.log('executou!');
     });
 } 
