@@ -5,8 +5,8 @@ const router = express.Router();
 const controller = require('../controllers/product-controller');
 
 router.post('/account/login/', controller.postLogin);
-router.post('/post/usuario/create/', controller.postCreateLogin);
-router.post('/post/service/create/', controller.postCreateService);
+router.post('/account/create/', controller.postCreateLogin);
+router.post('/service/create/', controller.postCreateService);
 
 
 router.put('/put/usuario/:id', controller.put);

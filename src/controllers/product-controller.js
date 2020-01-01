@@ -4,33 +4,35 @@ const connection = require('../connection');
 
 exports.postLogin = (req, res) => {
     var body = req.body;
-    var login = body.login.substring(0, 150);
-    var password = body.password.substring(0, 150);
+    var login = body.login.substring(0, 14);
+    var password = body.password.substring(0, 14);
     queryLogin(`SELECT codigo, nomeCompleto, telefone, email, login, Permissao_codigo FROM usuario WHERE login = "${login}" AND password = "${password}";`, res);
 
 }
 
-
 exports.postCreateLogin = (req, res, next) => {
-    const nomeCompleto = req.query.nomeCompleto.substring(0, 150);
-    const telefone = req.query.telefone.substring(0, 150);
-    const email = req.query.email.substring(0, 150);
-    const login = req.query.login.substring(0, 11);
-    const password = req.query.password.substring(0, 11);
-    const Permissao_codigo = parseInt(req.query.Permissao_codigo);
-    console.log(req.query);
-    queryCreateUser(`INSERT INTO bdfanap.usuario(nomeCompleto, telefone, email, login, password, Permissao_codigo) VALUES ('${nomeCompleto}', '${telefone}', '${email}','${login}', '${password}', '${Permissao_codigo}')`, res);
+    var body = req.body;
+    var nomeCompleto = body.nomeCompleto.substring(0, 150);
+    var telefone = body.telefone.substring(0, 150);
+    var email = body.email.substring(0, 150);
+    var login = body.login.substring(0, 11);
+    var password = body.password.substring(0, 11);
+    var Permissao_codigo = parseInt(body.Permissao_codigo);
+    console.log(body);
+    queryCreateUser(`INSERT INTO bdfanap.usuario(nomeCompleto, telefone, email, login, password, Permissao_codigo) VALUES ('${nomeCompleto}', '${telefone}', '${email}','${login}', '${password}', '${Permissao_codigo}')`,
+        `SELECT * FROM bdfanap.usuario where codigo = (select max(usuario.codigo) from usuario);`, res);
 };
 
 exports.postCreateService = (req, res, next) => {
-    const descricao = req.query.descricao.substring(0, 150);
-    const valor = parseFloat(req.query.valor);
-    const tempoGasto = parseInt(req.query.tempoGasto);
-    const TipoServico_codigo = parseInt(req.query.TipoServico_codigo);
-    console.log(req.query);
-    queryCreateService(`INSERT INTO bdfanap.servico (descricao, valor, tempoGasto, TipoServico_codigo) VALUES ('${descricao}', '${valor}', '${tempoGasto}', '${TipoServico_codigo}')`, res);
+    var body = req.body;
+    const descricao = body.descricao.substring(0, 11);
+    const valor = parseFloat(body.valor);
+    const tempoGasto = parseInt(body.tempoGasto);
+    const TipoServico_codigo = parseInt(body.TipoServico_codigo);
+    console.log(body);
+    queryCreateService(`INSERT INTO bdfanap.servico (descricao, valor, tempoGasto, TipoServico_codigo) VALUES ('${descricao}', '${valor}', '${tempoGasto}', '${TipoServico_codigo}')`,
+        `SELECT * FROM bdfanap.servico where codigo = (select max(servico.codigo) from servico);`, res);
 };
-
 
 exports.put = (req, res, next) => {
     const id = parseInt(req.params.id);
@@ -55,38 +57,52 @@ function queryLogin(sqlQry, res) {
 
     connection.query(sqlQry, function (error, results, fields) {
         if (error)
-            console.log('executou!');
+            console.log('Erro ao logar!');
         else
-            res.json(results);    
-        console.log('executou!');
+            res.json(results);
+        console.log('Usuarilo logou no Sistema!');
     });
-} 
-       
-   
-
-
-function queryCreateUser(sqlUser, res) {
-
-    connection.query(sqlUser, function (error) {
-        if (error) {
-            res.send("Executou na um erro no cadastro de usuario!");
-        } else {
-            res.send('Execução bem sucedida!');
-        };
-    })
 }
 
-function queryCreateService(sqlUser, res) {
 
-    connection.query(sqlUser, function (error) {
+function queryCreateUser(sqlQry, sqlUser, res) {
+
+    connection.query(sqlQry, function (error, results, fields) {
         if (error) {
-            console.log(error);
-            res.send("Executou um erro no cadastro do serviço!");
+            res.send(error.code);
         } else {
-            res.send('Execução bem sucedida!');
-        };
-    })
+            return connection.query(sqlUser, function (error, results, fields) {
+                if (error)
+                    console.log('executou um erro emp!');
+                else
+                    res.json(results);
+            })
+        }
+    }
+    )
 }
+
+
+function queryCreateService(sqlQry, sqlUser, res) {
+    connection.query(sqlQry, function (error, results, fields) {
+        if (error) {
+            res.send(error.code);
+        } else {
+            return connection.query(sqlUser, function (error, results, fields) {
+                if (error)
+                    console.log('executou um erro emp!');
+                else
+                    res.json(results);
+            })
+        }
+    }
+    )
+}
+
+
+
+
+
 
 
 /* function queryCreateUser(sqlUser, sqlCon, sqlEmp, res) {
@@ -110,7 +126,7 @@ function queryCreateService(sqlUser, res) {
                             console.log('executou um erro emp!');
                         else
                             res.json(results);
-                        connection.end();
+
                         console.log('execução bem sucedida !');
                     });
             });

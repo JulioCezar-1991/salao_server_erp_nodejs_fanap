@@ -7,8 +7,12 @@ const app = express();
 const connection = require('../connection');
 
 
-router.get('/get/usuario', (req, res, rows) => {
-    execSQLQuery('SELECT * FROM  bdfanap.usuario', res);
+router.get('/servico', (req, res, rows) => {
+    execSQLQuery('SELECT * FROM bdfanap.servico', res);
+});
+
+router.get('/categoria', (req, res, rows) => {
+    execSQLQuery('SELECT * FROM bdfanap.tiposervico', res);
 });
 
 router.get('/get/usuario/:id?', (req, res) => { 
