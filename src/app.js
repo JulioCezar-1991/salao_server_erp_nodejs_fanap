@@ -4,16 +4,12 @@ const express = require('express');
 const app = express();
 
 const indexRoute = require('./routes/index-route');
-const productRoute = require('./routes/product-route'); 
-
-const bodyParser = require('body-parser');
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
+const productRoute = require('./routes/product-route');
+const userRoute = require('./routes/user-route');
 
 app.use('/', indexRoute);
 app.use('/', productRoute);
+app.use('/', userRoute);
 
 module.exports = app;
 

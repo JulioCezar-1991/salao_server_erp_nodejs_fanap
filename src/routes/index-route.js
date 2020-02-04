@@ -36,11 +36,12 @@ app.use('/', router);
 
 function execSQLQuery(sqlQry, res) {
 
-    connection.query(sqlQry, function (error, results, fields) {
-        if (error)
-            console.log('executou!');
-        else
+    connection.query(sqlQry, function (error, res, fields) {
+        if (error){
+            console.log('Erro ' + error.code);
+        }else{
             res.json(results);    
+        }
         console.log('executou!');
     });
 } 
