@@ -6,7 +6,6 @@ const router = express.Router();
 const app = express();
 const connection = require('../connection');
 
-
 router.get('/servico', (req, res, rows) => {
     execSQLQuery('SELECT * FROM bdfanap.servico', res);
 });
@@ -36,14 +35,16 @@ app.use('/', router);
 
 function execSQLQuery(sqlQry, res) {
 
-    connection.query(sqlQry, function (error, res, fields) {
-        if (error){
-            console.log('Erro ' + error.code);
-        }else{
-            res.json(results);    
+    connection.query(sqlQry, function (error, results, fields) {
+        if (error) {
+        console.log('Erro ' + error.code);
+
+        }else {
+            res.json(results); 
+       
         }
         console.log('executou!');
-    });
+        });
 } 
 
 

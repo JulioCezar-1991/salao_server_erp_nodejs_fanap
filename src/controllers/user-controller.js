@@ -53,7 +53,6 @@ function queryLogin(sqlQry, res) {
     });
 }
 
-
 function queryCreateUser(sqlQry, sqlUser, res) {
 
     connection.query(sqlQry, function (error, results, fields) {
