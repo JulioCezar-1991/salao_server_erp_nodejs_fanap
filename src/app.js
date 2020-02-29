@@ -1,12 +1,17 @@
 'use strict'
 
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 
 const indexRoute = require('./routes/index-route');
 const productRoute = require('./routes/product-route');
-const userRoute = require('./routes/user-route');
+const userRoute = require('./routes/user-route'); 
 
+
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use('/', indexRoute);
 app.use('/', productRoute);
 app.use('/', userRoute);

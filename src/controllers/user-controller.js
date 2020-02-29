@@ -2,13 +2,13 @@
 
 const connection = require('../connection');
 
-exports.postLogin = (req, res) => {
+exports.postLogin = (req, res, next) => {
     var body = req.body;
-    var login = body.login.substring(0, 14);
-    var password = body.password.substring(0, 14);
-    queryLogin(`SELECT codigo, nomeCompleto, telefone, email, login, Permissao_codigo FROM usuario WHERE login = "${login}" AND password = "${password}";`, res);
-
-}
+    console.log(body);
+    var login = body.login;
+    var password = body.password;
+    queryLogin(`SELECT codigo_usuario, nome_completo, telefone, email, login, Permissao_Codigo FROM usuario WHERE login = '${login}' AND senha = '${password}';`, res);
+};
 
 exports.postCreateLogin = (req, res, next) => {
     var body = req.body;
@@ -18,7 +18,7 @@ exports.postCreateLogin = (req, res, next) => {
     var login = body.login.substring(0, 11);
     var password = body.password.substring(0, 11);
     var Permissao_codigo = parseInt(body.Permissao_codigo);
-    queryCreateUser(`INSERT INTO bdfanap.usuario(nomeCompleto, telefone, email, login, password, Permissao_codigo) VALUES ('${nomeCompleto}', '${telefone}', '${email}','${login}', '${password}', '${Permissao_codigo}')`,
+    queryCreateUser(`INSERT INTO bdfanap.usuario(nome_completo, telefone, email, login, senha, Permissao_Codigo) VALUES ('${nomeCompleto}', '${telefone}', '${email}','${login}', '${password}', '${Permissao_codigo}')`,
         `SELECT * FROM bdfanap.usuario where codigo = (select max(usuario.codigo) from usuario);`, res);
 };
 
@@ -49,7 +49,7 @@ function queryLogin(sqlQry, res) {
             console.log('Erro ao logar!');
         else
             res.json(results);
-        console.log('Usuarilo logou no Sistema!');
+        console.log('Usuario logou no Sistema!');
     });
 }
 
