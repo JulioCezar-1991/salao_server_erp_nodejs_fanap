@@ -1,114 +1,53 @@
-'use strict'
+'use strict';
 
 const express = require('express');
-const bodyParser = require('body-parser');
+const bodyParse = require('body-parser');
+const mongoose = require('mongoose');
+const config = require('./config');
 const app = express();
+const router = express.Router();
 
+// Connecta ao banco
+mongoose.connect(config.connectionString, {useUnifiedTopology: true, useNewUrlParser: true }); 
+
+// Carrega os Models
+
+const Customer =  require('./models/customer-model');
+const Client = require('./models/client-model');
+const Product = require('./models/product-model');
+const Order =  require('./models/order-model');
+
+// Carregar Rotas
 const indexRoute = require('./routes/index-route');
+const customerRoute = require('./routes/customer-router');
+const clientRoute = require('./routes/client-router');
 const productRoute = require('./routes/product-route');
-const userRoute = require('./routes/user-route'); 
 
+const orderRoute = require('./routes/order-route');
 
+app.use(bodyParse.json({
+    limit: '5mb'
+}));
+app.use(bodyParse.urlencoded({extended: false}));
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// Habilita o CORS
+app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, x-access-token');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    next();
+});
+
 app.use('/', indexRoute);
-app.use('/', productRoute);
-app.use('/', userRoute);
+app.use('/customers', customerRoute);
+app.use('/client', clientRoute)
+app.use('/products', productRoute);
+app.use('/orders', orderRoute);
 
 module.exports = app;
 
+//Iniciar o NPM
+// npm init -y
 
-/* con.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
-  con.query("CREATE DATABASE mydb", function (err, result) {
-    if (err) throw err;
-    console.log("Database created");
-  });
-});  */
-
-/* con.connect(function(err){
-  if(err) throw err;
-  console.log("Connected");
-  var sql = "CREATE TABLE IF NOT EXISTS mydb.Clientes (\n"+
-                  "ID int NOT NULL AUTO_INCREMENT,\n"+
-                  "Nome varchar(150) NOT NULL,\n"+
-                  "CPF char(11) NOT NULL,\n"+
-                  "PRIMARY KEY (ID)\n"+
-                  ");";
-  con.query(sql, function (err, result) {
-    if(err) throw err;
-    console.log("Table created");
-  })
-});  */
-
-/* con.connect(function(err){
-  if (err) throw err;
-  console.log("Connected");
-  var sql = "INSERT INTO mydb.customers(name, address) VALUES ('Company Inc',  'Highway 37')";
-  con.query(sql, function (err, result){
-    if (err) throw err;
-    console.log("1 record insertd");
-  })
-}); */
-
-/* con.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
-  var sql = "INSERT INTO mydb.aluno (nome, sobrenome) VALUES ?";
-  var values = [
-    ['Julio', 'Cezar'],
-    ['Willian', 'Indefinido'],
-    ['Yure', 'Pereira'],
-    ['Caio', 'Lemes'],
-    ['Michael', 'Valley'],
-    ['Sandy', 'Junior'],
-    ['Eduardo', 'Zero']
-  ];
-  con.query(sql, [values], function (err, result) {
-    if (err) throw err;
-    console.log("Number of records inserted: " + result.affectedRows);
-  });
-}); */
-
-
-/* con.connect(function(err) {
-  if (err) throw err;
-  con.query("SELECT * FROM mydb.customers ORDER BY name", function (err, result, fields) {
-    if (err) throw err;
-    console.log(result);
-  });
-}); */
-
-/* con.connect(function(err) {
-  if (err) throw err;
-  var sql = "SELECT * FROM mydb.customers LIMIT 5 OFFSET 2";
-  con.query(sql, function (err, result) {
-    if (err) throw err;
-    console.log(result);
-  });
-}); */
-
-/* con.connect(function(err) {
-  if (err) throw err;
-  var sql = "DELETE FROM mydb.customers WHERE name = 'Company Inc'";
-  con.query(sql, function (err, result) {
-    if (err) throw err;
-    console.log("Number of records deleted: " + result.effectedRows);
-  });
-}); */
-
-
-/* con.connect(function(err) {
-  if (err) throw err;
-  var sql = "UPDATE mydb.customers SET address = 'Rua' WHERE address = 'John'";
-  con.query(sql, function (err, result) {
-    if (err) throw err;
-    console.log(result.affectedRows + " record(s) updated");
-  });
-}); */
-
-
-// Carrega as Rotas
-
+//Pacotes necessario para roda o projeto...
+//npm install http express debug --save

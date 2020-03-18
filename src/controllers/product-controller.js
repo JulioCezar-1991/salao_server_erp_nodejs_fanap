@@ -1,29 +1,69 @@
-'use strinc';
+'use strict';
 
-const connection = require('../connection');
+const repository = require('../repositories/product-repositories');
 
-exports.postCreateService = (req, res, next) => {
-    var body = req.body;
-    const descricao = body.descricao.substring(0, 11);
-    const valor = parseFloat(body.valor);
-    const tempoGasto = parseInt(body.tempoGasto);
-    const TipoServico_codigo = parseInt(body.TipoServico_codigo);
-    console.log(body);
-    queryCreateService(`INSERT INTO bdfanap.servico (descricao, valor, tempoGasto, TipoServico_codigo) VALUES ('${descricao}', '${valor}', '${tempoGasto}', '${TipoServico_codigo}')`,
-        `SELECT * FROM bdfanap.servico where codigo = (select max(servico.codigo) from servico);`, res);
+exports.get = async(req, res, next) => {
+    try {
+    var data = await repository.get();
+    res.status(200).send(data);
+    } catch (e) {
+        
+        res.status(500).send({
+            
+            message: 'Falha ao processar sua requisição'
+        });
+    }
+}
+
+exports.getBySlug = async (req, res, next) => {
+    try{
+        var data = await repository.getBySlug(req.params.slug)
+        res.status(200).send(data);
+    } catch(e) {
+        res.status(500).send({
+            message: 'Falha ao processar sua requisição'
+        });
+    }
+}
+
+
+exports.post = async (req, res, next) => {
+    try{
+        await repository.create(req.body);
+        res.status(201).send({
+            message: "Produto cadastrado com sucesso!"
+         });
+    } catch(e) {
+        console.log(e.errmsg);
+        res.status(500).send({
+            message: 'Falha ao processar sua requisição'
+        });
+    }  
 };
 
-function queryCreateService(sqlQry, sqlUser, res) {
-    connection.query(sqlQry, function (error, results, fields) {
-        if (error) {
-            res.send(error.code);
-        } else {
-            return connection.query(sqlUser, function (error, results, fields) {
-                if (error)
-                    console.log('executou um erro emp!');
-                else
-                    res.json(results);
-            })
-        }
-    })
+exports.put = async (req, res, next) => {
+    try{
+        await repository.update(req.params.id, req.body);
+        res.status(200).send({
+                message: 'Produto atualizado com sucesso!'
+        });
+    } catch(e) {
+        res.status(400).send({
+            message: 'Falha ao processar sua requisição'
+        });
+    }       
+};
+
+exports.delete = async (req, res, next) => {
+    repository.delete(req.body.id)
+    .then(x=> {
+        res.status(200).send({
+            message: 'Produto removido com sucesso!'
+        });
+    }).catch(e => {
+        res.status(400).send({
+            message: 'Falha ao remover produto',
+            data: e
+        });
+    });
 };
