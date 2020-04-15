@@ -1,4 +1,4 @@
-'use strict';
+/* 'use strict';
 
 var nodemailer = require("nodemailer");
 
@@ -24,5 +24,5 @@ exports.send = async (to, subject, body) => {
     }).catch(err => {
         console.log(err);
     });
-};
+}; */
 

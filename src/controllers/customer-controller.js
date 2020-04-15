@@ -3,7 +3,7 @@
 const repository = require('../repositories/customer-repositories');
 const md5 = require('md5'); //Utilizado para ocultar password
 const authService = require('../services/auth-service');
-const emailService = require('../services/email-service');
+/* const emailService = require('../services/email-service'); */
 
 exports.get = async(req, res, next) => {
     try {

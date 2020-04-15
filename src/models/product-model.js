@@ -9,12 +9,6 @@ const schema = new Schema({
         type: String,
         required: true,
         trim: true,//Usada para remover espaços em branco
-        unique: true
-    },
-    slug: { // Ex: Cadeira Games = cadeira-gamer  URI
-        type: String,
-        required: [true, 'O slug é obrigatorio'],
-        trim: true,
         index: true,
         unique: true
     },
@@ -35,6 +29,11 @@ const schema = new Schema({
         required: true,
         default: true,
     },
+    dataHoraRegistro:{
+        type: Date,
+        default: Date.now,
+        require: true
+    }
 });
 
 module.exports = mongoose.model('Product', schema);

@@ -8,17 +8,17 @@ exports.get = async () => {
     const res = await Product
     .find({
         active: true
-    }, 'title price slug description averagetime');
+    }, 'title price slug description averagetime dataHoraRegistro');
     return res;
 }
 
-exports.getBySlug = async (slug) => {
+/* exports.getBySlug = async (slug) => {
     const res = await Product
     .findOne({
         slug: slug,
         active: true}, 'title description price slug tags');
     return res;    
-}
+} */
 
 exports.create = async (data) => {
     var product = new Product(data);
