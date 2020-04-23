@@ -16,7 +16,7 @@ exports.create = async (data) => {
 
 exports.authenticate = async(data) => {
     const res = await Customer.findOne({
-        login: data.login,
+        email: data.email,
         password: data.password
     });
     return res;

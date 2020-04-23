@@ -45,7 +45,8 @@ exports.post = async(req, res, next) => {
 exports.authenticate = async(req, res, next) => {
     try {
         const customer = await repository.authenticate({
-            login: req.body.login,
+            
+            email: req.body.email,
             password: md5(req.body.password + global.SALT_KEY)
         });
 
@@ -57,12 +58,8 @@ exports.authenticate = async(req, res, next) => {
         }
 
         res.status(201).send({
-           
-            data: {
                 email: customer.email,
                 name: customer.name,
-                roles: customer.roles
-            }
         });
     } catch (e) {
         res.status(500).send({
