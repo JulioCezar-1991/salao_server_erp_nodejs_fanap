@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-   
     title: {
         type: String,
         required: true,
@@ -29,7 +28,7 @@ const schema = new Schema({
         required: true,
         default: true,
     },
-    dataHoraRegistro:{
+    createDate:{
         type: Date,
         default: Date.now,
         require: true

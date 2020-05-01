@@ -47,16 +47,12 @@ const schema = new Schema({
         type: String,
         trim: true
     },
-    state: {
-        type: String,
-        trim: true
-    },
     active: {
         type: Boolean,
         required: true,
         default: true,
     },
-    dataHoraRegistro:{
+    createDate:{
         type: Date,
         default: Date.now,
         require: true

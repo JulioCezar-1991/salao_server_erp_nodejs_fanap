@@ -7,6 +7,7 @@ exports.get = async(req, res, next) => {
     try {
     var data = await repository.get();
     res.status(200).send(data);
+    console.log(data);
     } catch (e) {
         res.status(500).send({
             message: 'Falha ao processar sua requisição'
@@ -14,16 +15,17 @@ exports.get = async(req, res, next) => {
     }
 }
 
-
 exports.post = async(req, res, next) => {
     try {
         await repository.create({
-            customer: data.id,
-            number: guid.raw().substring(0, 6),
-            items: req.body.items
+            customer: req.body.customer,
+           client: req.body.client,
+           number: guid.raw().substring(0, 6),
+            itens: req.body.items 
         });
+        console.log(req.body.client);
         res.status(201).send({
-            message: 'Pedido cadastrado com sucesso!'
+            message: 'Agendamento cadastrado com sucesso!'
         });
     } catch (e) {
         console.log(e);
@@ -31,4 +33,18 @@ exports.post = async(req, res, next) => {
             message: 'Falha ao processar sua requisição'
         });
     }
+};
+
+exports.delete = async (req, res, next) => {
+    repository.delete(req.body.id)
+    .then(x=> {
+        res.status(200).send({
+            message: 'Agendamento removido com sucesso!'
+        });
+    }).catch(e => {
+        res.status(400).send({
+            message: 'Falha ao remover o agendamento',
+            data: e
+        });
+    });
 };

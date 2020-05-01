@@ -8,22 +8,14 @@ const schema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Customer'
     },
+    client: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Client'
+    },
     number: {
         type: String,
         required: true,
     },
-    createDate: {
-        type: Date,
-        required: true,
-        default: Date.now
-    },
-    status: {
-        type: String,
-        required: true,
-        enum: ['created', 'done'],
-        default: 'created'
-    },
-    
     itens: [{
         quantity: {
             type: Number,
@@ -38,7 +30,18 @@ const schema = new Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Product'
         }
-    }]
+    }],
+    status: {
+        type: String,
+        required: true,
+        enum: ['created', 'done'],
+        default: 'created'
+    },
+    createDate:{
+        type: Date,
+        default: Date.now,
+        require: true
+    }
 });
 
 module.exports = mongoose.model('Order', schema);

@@ -30,7 +30,17 @@ const schema = new Schema({
         required: true,
         enum: ['user', 'admin'],
         default: 'user'
-    }]
+    }],
+    active: {
+        type: Boolean,
+        required: true,
+        default: true,
+    },
+    createDate:{
+        type: Date,
+        default: Date.now,
+        require: true
+    }
 });
 
 module.exports = mongoose.model('Customer', schema);
