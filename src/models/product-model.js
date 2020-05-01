@@ -8,9 +8,9 @@ const schema = new Schema({
     title: {
         type: String,
         required: true,
-        trim: true,//Usada para remover espaços em branco
+        trim: true, //Usado para remover espaços em branco
         index: true,
-        unique: true
+        unique: true,
     },
     description: {
         type: String,
@@ -21,7 +21,7 @@ const schema = new Schema({
         required: true,
     },
     averagetime: {
-        type: Date,
+        type: String,
         required: true,
     },
     active: {

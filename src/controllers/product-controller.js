@@ -15,18 +15,6 @@ exports.get = async(req, res, next) => {
     }
 }
 
-exports.getBySlug = async (req, res, next) => {
-    try{
-        var data = await repository.getBySlug(req.params.slug)
-        res.status(200).send(data);
-    } catch(e) {
-        res.status(500).send({
-            message: 'Falha ao processar sua requisição'
-        });
-    }
-}
-
-
 exports.post = async (req, res, next) => {
     try{
         await repository.create(req.body);

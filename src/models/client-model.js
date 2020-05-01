@@ -56,6 +56,11 @@ const schema = new Schema({
         required: true,
         default: true,
     },
+    dataHoraRegistro:{
+        type: Date,
+        default: Date.now,
+        require: true
+    }
 });
 
 module.exports = mongoose.model('Client', schema);
