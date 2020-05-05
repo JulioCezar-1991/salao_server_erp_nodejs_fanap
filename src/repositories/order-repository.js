@@ -7,7 +7,7 @@ exports.get = async(data) => {
     var res = await Order.find({},  'number status')
     .populate('customer', 'name')
     .populate('client', 'name email telcel telfix') // Método para trazer os dados do cliente
-    .populate('itens.product', 'title price quantity' ); // Método para trazer os dados do produtos
+    .populate('itens.product', 'title price quatity' ); // Método para trazer os dados do produtos
     return res;
 }
 

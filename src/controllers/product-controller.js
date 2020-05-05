@@ -29,9 +29,9 @@ exports.post = async (req, res, next) => {
     }  
 };
 
-exports.put = async (req, res, next) => {
+exports.patch = async (req, res, next) => {
     try{
-        await repository.update(req.params.id, req.body);
+        await repository.patch(req.params.id, req.body);
         res.status(200).send({
                 message: 'Produto atualizado com sucesso!'
         });

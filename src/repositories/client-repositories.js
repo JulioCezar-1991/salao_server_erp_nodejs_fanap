@@ -19,13 +19,20 @@ exports.getById = async(id) => {
     return res;
 };
 
-exports.update = async (id, data) => {
+exports.patch = async (id, data) => {
     await Client
         .findByIdAndUpdate(id,{
-            $set: {
-                use: data.use,
+            $set: { 
+                name: data.name,
+                cpf: data.cpf,
+                date: data.date,
+                telcel: data.telcel,
+                telfix: data.telfix,
                 email: data.email,
-                password: data.password
+                cep: data.cep,
+                address: data.address,
+                sector: data.sector,
+                city: data.city, 
             }
         });
 };

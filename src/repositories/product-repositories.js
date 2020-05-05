@@ -12,26 +12,27 @@ exports.get = async () => {
     return res;
 }
 
-/* exports.getBySlug = async (slug) => {
+ exports.getBySlug = async (slug) => {
     const res = await Product
     .findOne({
         slug: slug,
         active: true}, 'title description price slug tags');
     return res;    
-} */
+} 
 
 exports.create = async (data) => {
     var product = new Product(data);
     await product.save();
 };
 
-exports.update = async (id, data) => {
+exports.patch = async (id, data) => {
     await Product
         .findByIdAndUpdate(id,{
             $set: {
                 title: data.title,
                 description: data.description,
-                price: data.price
+                price: data.price,
+                averagetime: data.averagetime
             }
         });
 }
