@@ -14,21 +14,20 @@ exports.create = async (data) => {
     await client.save();
 };
 
-exports.getById = async (id) => {
-    const res = await Client.findById(id);
-    return res;
-};
-
 exports.patch = async (id, data) => {
     await Client
         .findByIdAndUpdate(id, data,
-            function (err, result) {
-                console.log(err);
+            function (error, client) {
+                console.log('Client update: ' + client);
             }, 
-        );
+    );
 };
 
-exports.delete = async (id) => {
+exports.delete = async (id , data) => {
     return Client
-        .findOneAndRemove(id)
-};
+        .findOneAndDelete(id , data, 
+            function(error, client){
+                console.log('Client deleted: ' + client);
+        }
+    );
+}

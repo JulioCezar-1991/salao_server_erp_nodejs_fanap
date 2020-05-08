@@ -43,13 +43,15 @@ exports.create = async (data) => {
 exports.patch = async (id, data) => {
     await Order
         .findByIdAndUpdate(id, data,
-            function (err, result) {
-                console.log(err);
+            function (error, order) {
+                console.log('Order update: ' + order);
             }, 
         );
 };
 
-exports.delete = async (id) => {
+exports.delete = async (id, data) => {
     return Order
-        .findOneAndRemove(id)
-}
+        .findByIdAndDelete(id, data, function(error, order){
+            consoleg.log('Order deleted: ' + order);
+        });
+};

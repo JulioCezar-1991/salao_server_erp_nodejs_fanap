@@ -8,7 +8,12 @@ const app = express();
 const router = express.Router();
 
 // Connecta ao banco
-mongoose.connect(config.connectionString, {findOneAndUpdate: true, findOneAndDelete: true, useUnifiedTopology: true, useNewUrlParser: true , useCreateIndex:true , useFindAndModify: true}); 
+mongoose.connect(config.connectionString, {
+    useUnifiedTopology: true, 
+    useNewUrlParser: true, 
+    useCreateIndex:true,
+    useFindAndModify: false
+    }); 
 
 // Carrega os Models
 

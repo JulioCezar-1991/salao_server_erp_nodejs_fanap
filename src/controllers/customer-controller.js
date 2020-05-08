@@ -2,8 +2,7 @@
 
 const repository = require('../repositories/customer-repositories');
 const md5 = require('md5'); //Utilizado para ocultar password
-const authService = require('../services/auth-service');
-/* const emailService = require('../services/email-service'); */
+const emailService = require('../services/email-service');
 
 exports.get = async(req, res, next) => {
     try {
@@ -48,18 +47,15 @@ exports.post = async(req, res, next) => {
 exports.authenticate = async(req, res, next) => {
     try {
         const customer = await repository.authenticate({
-            
             email: req.body.email,
             password: md5(req.body.password + global.SALT_KEY)
         });
-
         if (!customer) {
             res.status(404).send({
                 message: 'Usuário ou senha inválidos'
             });
             return;
         }
-
         res.status(201).send({
                 email: customer.email,
                 name: customer.name,
@@ -73,9 +69,9 @@ exports.authenticate = async(req, res, next) => {
     }
 };
 
-exports.put = async (req, res, next) => {
+exports.patch = async (req, res, next) => {
     try{
-        await repository.update(req.params.id, req.body);
+        await repository.patch(req.params.id, req.body);
         res.status(200).send({
                 message: 'Cadastro atualizado com sucesso!'
         });

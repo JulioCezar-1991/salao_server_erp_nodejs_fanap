@@ -61,7 +61,6 @@ exports.post = async(req, res, next) => {
             status: req.body.status,
             itens: req.body.items,
         });
-       
         res.status(201).send({
             message: 'Agendamento cadastrado com sucesso!'
         });
@@ -76,8 +75,7 @@ exports.post = async(req, res, next) => {
 exports.patch = async (req, res, next) => {
     try{
         await repository.patch(req.body.id, req.body);
-        
-        res.status(200).send({
+            res.status(200).send({
                 message: 'Cadastro atualizado com sucesso!'
         });
     } catch(e) {

@@ -22,17 +22,22 @@ exports.authenticate = async(data) => {
     return res;
 };
 
-exports.getById = async(id) => {
-    const res = await Customer.findById(id);
-    return res;
-};
-
-exports.update = async (id, data) => {
+exports.patch = async (id, data) => {
     await Customer
-        .findByIdAndUpdate(id, data);
+        .findByIdAndUpdate(id, data,
+            function (error, customer){
+                console.log('Customer update ' + customer);
+            }
+        );
 };
 
-exports.delete = async (id) => {
+
+
+exports.delete = async (id, data) => {
     return Customer
-        .findOneAndRemove(id)
+        .findByIdAndDelete(id, data,
+            function (error, customer){
+                console.log('Customer deleted: ' + customer);
+        }
+    );
 };

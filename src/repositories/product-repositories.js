@@ -6,9 +6,7 @@ const Product = mongoose.model('Product');
 
 exports.get = async () => {
     const res = await Product
-    .find({
-        active: true
-    }, 'title price slug description averagetime dataHoraRegistro');
+    .find();
     return res;
 }
 
@@ -19,10 +17,17 @@ exports.create = async (data) => {
 
 exports.patch = async (id, data) => {
     await Product
-        .findByIdAndUpdate(id, data);
-}
+        .findByIdAndUpdate(id, data,
+            function (error, product) {
+                console.log('Product update: ' + product);
+            }, 
+    );
+};
 
-exports.delete = async (id) => {
+exports.delete = async (id, data) => {
     return Product
-        .findOneAndRemove(id)
+        .findByIdAndDelete(id, data,
+            function(error, product){
+                console.log('Product deleted: ' + product);
+    });
 }
