@@ -10,6 +10,7 @@ exports.get = async(req, res, next) => {
     var data = await repository.get();
     res.status(200).send(data);
     } catch (e) {
+        console.log(e.message);
         res.status(500).send({
             message: 'Falha ao processar sua requisição'
         });
@@ -21,6 +22,7 @@ exports.post = async(req, res, next) => {
         await repository.create({
             name: req.body.name,
             telcel: req.body.telcel,
+            telfix: req.body.telfix,
             email: req.body.email,
             login: req.body.login,
             password: md5(req.body.password + global.SALT_KEY),
@@ -36,6 +38,7 @@ exports.post = async(req, res, next) => {
             message: 'Usuário cadastrado com sucesso!'
         });
     } catch (e) {
+        console.log(e.message);
         res.status(500).send({
             message: 'Falha ao processar sua requisição'
         });
@@ -63,6 +66,7 @@ exports.authenticate = async(req, res, next) => {
                 roles: customer.roles,
         });
     } catch (e) {
+        console.log(e.message);
         res.status(500).send({
             message: 'Falha ao processar sua requisição'
         });
@@ -76,6 +80,7 @@ exports.put = async (req, res, next) => {
                 message: 'Cadastro atualizado com sucesso!'
         });
     } catch(e) {
+        console.log(e.message);
         res.status(400).send({
             message: 'Falha ao processar sua requisição'
         });

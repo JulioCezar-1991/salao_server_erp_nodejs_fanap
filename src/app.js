@@ -40,7 +40,7 @@ app.use(function (req, res, next) {
 
 app.use('/', indexRoute);
 app.use('/customers', customerRoute);
-app.use('/client', clientRoute)
+app.use('/clients', clientRoute)
 app.use('/products', productRoute);
 app.use('/orders', orderRoute);
 

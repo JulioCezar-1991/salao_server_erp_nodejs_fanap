@@ -12,14 +12,6 @@ exports.get = async () => {
     return res;
 }
 
- exports.getBySlug = async (slug) => {
-    const res = await Product
-    .findOne({
-        slug: slug,
-        active: true}, 'title description price slug tags');
-    return res;    
-} 
-
 exports.create = async (data) => {
     var product = new Product(data);
     await product.save();
@@ -27,14 +19,7 @@ exports.create = async (data) => {
 
 exports.patch = async (id, data) => {
     await Product
-        .findByIdAndUpdate(id,{
-            $set: {
-                title: data.title,
-                description: data.description,
-                price: data.price,
-                averagetime: data.averagetime
-            }
-        });
+        .findByIdAndUpdate(id, data);
 }
 
 exports.delete = async (id) => {

@@ -13,11 +13,11 @@ const schema = new Schema({
         type: String,
         required: true
     },
-    email: {
+    telfix: {
         type: String,
         required: true
     },
-    login: {
+    email: {
         type: String,
         required: true
     },

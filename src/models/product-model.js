@@ -15,6 +15,11 @@ const schema = new Schema({
         type: String,
         required: true,
     },
+    type: {
+        type: String,
+        required: true,
+        enum: ['corte', 'pintura', 'lavagem', 'delilação'],
+    },
     price: {
         type: Number,
         required: true,

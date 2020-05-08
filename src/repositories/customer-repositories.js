@@ -29,13 +29,7 @@ exports.getById = async(id) => {
 
 exports.update = async (id, data) => {
     await Customer
-        .findByIdAndUpdate(id,{
-            $set: {
-                use: data.use,
-                email: data.email,
-                password: data.password
-            }
-        });
+        .findByIdAndUpdate(id, data);
 };
 
 exports.delete = async (id) => {

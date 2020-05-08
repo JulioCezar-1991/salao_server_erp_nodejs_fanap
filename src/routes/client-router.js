@@ -6,7 +6,7 @@ const controller = require('../controllers/client-controller');
 
 router.get('/', controller.get);
 router.post('/', controller.post);
-router.patch('/:id', controller.patch);
+router.patch('/', controller.patch);
 router.delete('/', controller.delete);
 
 module.exports = router;

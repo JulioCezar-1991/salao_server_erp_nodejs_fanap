@@ -29,11 +29,13 @@ exports.post = async (req, res, next) => {
 
 exports.patch = async (req, res, next) => {
     try{
-        await repository.patch(req.params.id, req.body);
+        await repository.patch(req.body.id, req.body);
+        
         res.status(200).send({
                 message: 'Cadastro atualizado com sucesso!'
         });
     } catch(e) {
+        console.log(e.message);
         res.status(400).send({
             message: 'Falha ao processar sua requisição'
         });
@@ -47,6 +49,7 @@ exports.delete = async (req, res, next) => {
             message: 'Cadastro removido com sucesso!'
         });
     }).catch(e => {
+        console.log(e.message);
         res.status(400).send({
             message: 'Falha ao remover produto',
             data: e

@@ -47,6 +47,10 @@ const schema = new Schema({
         type: String,
         trim: true
     },
+    state: {
+        type: String,
+        trim: true
+    },
     active: {
         type: Boolean,
         required: true,

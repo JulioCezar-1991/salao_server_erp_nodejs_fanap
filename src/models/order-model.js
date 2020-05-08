@@ -16,6 +16,10 @@ const schema = new Schema({
         type: String,
         required: true,
     },
+    schedulingdate: {
+        type: String,
+        required: true,
+    },
     itens: [{
         quantity: {
             type: Number,
@@ -34,8 +38,8 @@ const schema = new Schema({
     status: {
         type: String,
         required: true,
-        enum: ['created', 'done'],
-        default: 'created'
+        enum: ['open', 'done', 'canceled'],
+        default: 'open'
     },
     createDate:{
         type: Date,
