@@ -23,11 +23,10 @@ exports.patch = async (id, data) => {
     );
 };
 
-exports.delete = async (id , data) => {
+exports.delete = async (id, data) => {
     return Client
-        .findOneAndDelete(id , data, 
+        .findByIdAndDelete(id, data,
             function(error, client){
                 console.log('Client deleted: ' + client);
-        }
-    );
+    });
 }

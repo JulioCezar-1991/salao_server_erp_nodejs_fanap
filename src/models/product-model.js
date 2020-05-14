@@ -7,7 +7,7 @@ const schema = new Schema({
     title: {
         type: String,
         required: true,
-        trim: true, //Usado para remover espaços em branco
+        trim: true,
         index: true,
         unique: true,
     },
@@ -19,11 +19,11 @@ const schema = new Schema({
         type: String,
         required: true,
         enum: [
-               'Pintura Cabelo', 
-               'Pintura Unhas', 
-               'Delilação',
-               'Lavagem',
-               'Corte'
+            'Pintura das Unhas',
+            'Pintura de Cabelo', 
+            'Depilação',
+            'Lavagem',
+            'Corte'
             ],
     },
     price: {

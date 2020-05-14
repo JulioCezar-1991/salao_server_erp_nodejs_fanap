@@ -6,21 +6,31 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
     customer: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Customer'
+        ref: 'Customer',
+        /* required: true, */
     },
     client: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Client'
+        ref: 'Client',
+        /* required: true, */
     },
     number: {
         type: String,
-        required: true,
+        /* required: true, */
     },
     schedulingdate: {
         type: String,
-        required: true,
+        /* required: true, */
+    },
+    schedulinghour: {
+        type: String,
+        /* required: true, */
     },
     itens: [{
+        product: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Product'
+        },
         quantity: {
             type: Number,
             required: true,
@@ -28,18 +38,19 @@ const schema = new Schema({
         },
         price : {
             type: Number,
-            required: true
+            required: true,
         },
-        product: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Product'
-        }
+        
     }],
+    subtotal: {
+        type: Number,
+        /* required: true, */
+    },
     status: {
         type: String,
-        required: true,
-        enum: ['open', 'done', 'canceled'],
-        default: 'open'
+        required: true, 
+        enum: ['Aberto', 'Fechado', 'Cancelado'],
+        default: 'Aberto'
     },
     createDate:{
         type: Date,

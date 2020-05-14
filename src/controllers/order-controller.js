@@ -54,12 +54,14 @@ exports.getOrderCanceled = async(req, res, next) => {
 exports.post = async(req, res, next) => {
     try {
         await repository.create({
+            number: guid.raw().substring(0, 6),
             customer: req.body.customer,
             client: req.body.client,
             schedulingdate: req.body.schedulingdate,
-            number: guid.raw().substring(0, 6),
-            status: req.body.status,
+            schedulinghour: req.body.schedulinghour,
             itens: req.body.items,
+            subtotal: req.body.subtotal,
+            status: req.body.status,
         });
         res.status(201).send({
             message: 'Agendamento cadastrado com sucesso!'
@@ -73,8 +75,14 @@ exports.post = async(req, res, next) => {
 };
 
 exports.patch = async (req, res, next) => {
+    var cleanFoo = {};
+    for (var i in req.body) {
+        if (req.body[i] !== null && req.body[i] !== "") {
+        cleanFoo[i] = req.body[i];
+        }
+    }
     try{
-        await repository.patch(req.body.id, req.body);
+        await repository.patch(req.body.id, cleanFoo);
             res.status(200).send({
                 message: 'Cadastro atualizado com sucesso!'
         });

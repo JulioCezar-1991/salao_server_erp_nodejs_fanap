@@ -7,7 +7,9 @@ const schema = new Schema({
     name: {
         type: String,
         required: true,
-        unique: true
+        trim: true,
+        index: true,
+        unique: true,
     },
     cpf: {
         type: String,

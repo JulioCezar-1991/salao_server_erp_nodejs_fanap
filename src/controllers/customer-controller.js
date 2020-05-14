@@ -70,8 +70,14 @@ exports.authenticate = async(req, res, next) => {
 };
 
 exports.patch = async (req, res, next) => {
+    var cleanFoo = {};
+    for (var i in req.body) {
+        if (req.body[i] !== null && req.body[i] !== "") {
+        cleanFoo[i] = req.body[i];
+        }
+    }
     try{
-        await repository.patch(req.params.id, req.body);
+        await repository.patch(req.body.id, cleanFoo);
         res.status(200).send({
                 message: 'Cadastro atualizado com sucesso!'
         });
