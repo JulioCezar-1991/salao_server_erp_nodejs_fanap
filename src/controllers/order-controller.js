@@ -58,7 +58,6 @@ exports.post = async(req, res, next) => {
             customer: req.body.customer,
             client: req.body.client,
             schedulingdate: req.body.schedulingdate,
-            schedulinghour: req.body.schedulinghour,
             itens: req.body.items,
             subtotal: req.body.subtotal,
             status: req.body.status,

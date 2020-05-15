@@ -22,10 +22,6 @@ const schema = new Schema({
         type: String,
         /* required: true, */
     },
-    schedulinghour: {
-        type: String,
-        /* required: true, */
-    },
     itens: [{
         product: {
             type: mongoose.Schema.Types.ObjectId,

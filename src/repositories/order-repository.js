@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const Order = mongoose.model('Order');
 
 exports.getOrderAll = async(data) => {
-    var res = await Order.find({},  'number status subtotal createDate schedulingdate schedulinghour')
+    var res = await Order.find({},  'number status subtotal createDate schedulingdate')
     .populate('customer', 'name email telcel telfix')
     .populate('client', 'name email telcel telfix') // Método para trazer os dados do cliente
     .populate('itens.product', 'title price averagetime quantity' ); // Método para trazer os dados do produtos
