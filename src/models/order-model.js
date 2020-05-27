@@ -42,10 +42,16 @@ const schema = new Schema({
         type: Number,
         /* required: true, */
     },
+    formPayment: {
+        type: String,
+        required: true, 
+        enum: ['Forma de Pagamento', 'Dinheiro', 'Cartão de Credito', 'Cartão de Debito', 'Carteira'],
+        default: 'Aberto'
+    },
     status: {
         type: String,
         required: true, 
-        enum: ['Aberto', 'Fechado', 'Cancelado'],
+        enum: ['Status do Serviço', 'Aberto', 'Fechado', 'Cancelado'],
         default: 'Aberto'
     },
     createDate:{

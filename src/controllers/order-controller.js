@@ -58,9 +58,11 @@ exports.post = async(req, res, next) => {
             customer: req.body.customer,
             client: req.body.client,
             schedulingdate: req.body.schedulingdate,
+            formPayment: req.body.formPayment,
+            status: req.body.status,
             itens: req.body.items,
             subtotal: req.body.subtotal,
-            status: req.body.status,
+            
         });
         res.status(201).send({
             message: 'Agendamento cadastrado com sucesso!'

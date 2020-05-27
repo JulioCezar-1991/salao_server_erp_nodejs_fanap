@@ -30,4 +30,4 @@ exports.delete = async (id, data) => {
             function(error, product){
                 console.log('Product deleted: ' + product);
     });
-}
+};

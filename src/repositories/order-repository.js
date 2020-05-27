@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const Order = mongoose.model('Order');
 
 exports.getOrderAll = async(data) => {
-    var res = await Order.find({},  'number status subtotal createDate schedulingdate')
+    var res = await Order.find({},  'number status formPayment subtotal createDate schedulingdate')
     .populate('customer', 'name email telcel telfix')
     .populate('client', 'name email telcel telfix') // Método para trazer os dados do cliente
     .populate('itens.product', 'title price averagetime quantity' ); // Método para trazer os dados do produtos
@@ -12,7 +12,7 @@ exports.getOrderAll = async(data) => {
 }
 
 exports.getOrderOpen = async(data) => {
-    var res = await Order.find({ status : "Aberto"},  'number status subtotal createDate schedulingdate schedulinghour')
+    var res = await Order.find({ status : "Aberto"},  'number status formPayment subtotal createDate schedulingdate')
     .populate('customer', 'name email telcel telfix')
     .populate('client', 'name email telcel telfix')
     .populate('itens.product', 'title price averagetime' );
@@ -20,7 +20,7 @@ exports.getOrderOpen = async(data) => {
 }
 
 exports.getOrderDone = async(data) => {
-    var res = await Order.find({ status : "Fechado"},  'number status subtotal createDate schedulingdate schedulinghour')
+    var res = await Order.find({ status : "Fechado"},  'number status formPayment subtotal createDate schedulingdate')
     .populate('customer', 'name email telcel telfix')
     .populate('client', 'name email telcel telfix')
     .populate('itens.product', 'title price averagetime' );
@@ -28,7 +28,7 @@ exports.getOrderDone = async(data) => {
 }
 
 exports.getOrderCanceled = async(data) => {
-    var res = await Order.find({ status : "Cancelado"},  'number status subtotal createDate schedulingdate schedulinghour')
+    var res = await Order.find({ status : "Cancelado"},  'number status formPayment subtotal createDate schedulingdate')
     .populate('customer', 'name email telcel')
     .populate('client', 'name email telcel telfix') // Método para trazer os dados do cliente
     .populate('itens.product', 'title price averagetime' ); // Método para trazer os dados do produtos
@@ -51,7 +51,8 @@ exports.patch = async (id, data) => {
 
 exports.delete = async (id, data) => {
     return Order
-        .findByIdAndDelete(id, data, function(error, order){
-            consoleg.log('Order deleted: ' + order);
+        .findByIdAndDelete(id, data,
+            function(error, order){
+                console.log('Order deleted: ' + order);
         });
 };
