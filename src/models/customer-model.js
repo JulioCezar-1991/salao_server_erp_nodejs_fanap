@@ -15,7 +15,7 @@ const schema = new Schema({
     },
     telfix: {
         type: String,
-        required: true
+        
     },
     email: {
         type: String,
@@ -28,8 +28,8 @@ const schema = new Schema({
     roles: [{
         type: String,
         required: true,
-        enum: ['user', 'admin'],
-        default: 'user'
+        enum: ['Administrador', 'Usuário'],
+        default: 'Usuário'
     }],
     active: {
         type: Boolean,

@@ -12,15 +12,15 @@ const schema = new Schema({
     client: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Client',
-        /* required: true, */
+        required: true, 
     },
     number: {
         type: String,
-        /* required: true, */
+        required: true, 
     },
     schedulingdate: {
         type: String,
-        /* required: true, */
+        required: true,
     },
     itens: [{
         product: {
